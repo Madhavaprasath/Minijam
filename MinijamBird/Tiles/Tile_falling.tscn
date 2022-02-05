@@ -1,0 +1,60 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Tiles/Tile_Static.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Tiles/Tile_falling.gd" type="Script" id=2]
+
+[sub_resource type="Animation" id=1]
+resource_name = "Falling"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 2, 0 ), Vector2( -2, 0 ), Vector2( 2, 0 ), Vector2( -2, 0 ), Vector2( 0, 0 ) ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.8 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "queue_free"
+} ]
+}
+
+[sub_resource type="Animation" id=2]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 2, 0 ) ]
+}
+
+[node name="Tile_falling" instance=ExtResource( 1 )]
+position = Vector2( 0.5, 0 )
+script = ExtResource( 2 )
+
+[node name="Sprite" parent="." index="0"]
+self_modulate = Color( 0.713726, 0.254902, 0.254902, 1 )
+position = Vector2( 2, 0 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="2"]
+anims/Falling = SubResource( 1 )
+anims/RESET = SubResource( 2 )

@@ -4,15 +4,18 @@ extends Node2D
 
 onready var tilemap=get_node("TileMap")
 
-var scene_dict={}
+var scene_dict={
+	0:preload("res://Tiles/Tile_Static.tscn"),
+	1:preload("res://Tiles/Tile_falling.tscn")
+}
 
 onready var half_cell_size=tilemap.cell_size*0.5
 onready var tiles=get_node("Tiles")
 
 
 func _ready():
-	pass
-
+	put_scene_into_tile()
+	make_circles(4)
 func put_scene_into_tile():
 	
 	for tile_position in tilemap.get_used_cells():
@@ -33,3 +36,13 @@ func place_scene(scene,tile_position):
 		var obj=scene.instance()
 		obj.global_position=(tilemap.map_to_world(tile_position)+half_cell_size)
 		tiles.add_child(obj)
+
+func make_circles(radius):
+	if(radius>3):
+		var i=2
+		while(i<=radius):
+			print(i)
+			i+=1
+		while(i>=2):
+			print(i)
+			i-=1
