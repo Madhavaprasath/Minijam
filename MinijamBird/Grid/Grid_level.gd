@@ -9,8 +9,13 @@ var scene_dict={
 	1:preload("res://Tiles/Tile_falling.tscn")
 }
 
+
 onready var half_cell_size=tilemap.cell_size*0.5
 onready var tiles=get_node("Tiles")
+onready var enemies=get_node("Enemies")
+
+var player_turn=true
+
 
 
 func _ready():
@@ -46,3 +51,8 @@ func make_circles(radius):
 		while(i>=2):
 			print(i)
 			i-=1
+
+
+func _on_Player_player_turn_finished():
+	player_turn=false
+	enemies.start_enemey_move()

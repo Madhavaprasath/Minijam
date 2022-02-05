@@ -1,8 +1,13 @@
 extends KinematicBody2D
 
+signal Player_turn_finished()
+
 var direction_vector=Vector2()
 var speed=10.0
 var velocity=Vector2()
+onready var level=get_parent()
+
+
 
 func _ready() -> void:
 	set_physics_process(false)
@@ -31,10 +36,12 @@ func get_movement(event):
 				$Tween.interpolate_property(self,"position",global_position,global_position+(directions[dir]*Vector2(64,64)),
 							1.0/speed,Tween.TRANS_SINE,Tween.EASE_IN_OUT)
 				$Tween.start()
+				emit_signal("Player_turn_finished")
 
 func _unhandled_key_input(event: InputEventKey) -> void:
-	calculate_exteme_points()
-	get_movement(event)
+	if(level.player_turn):
+		calculate_exteme_points()
+		get_movement(event)
 
 func calculate_exteme_points():
 	position.x=clamp(position.x,32,(1024-32))
