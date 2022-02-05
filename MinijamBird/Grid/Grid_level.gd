@@ -20,7 +20,6 @@ var player_turn=true
 
 func _ready():
 	put_scene_into_tile()
-	make_circles(4)
 func put_scene_into_tile():
 	
 	for tile_position in tilemap.get_used_cells():
@@ -46,13 +45,18 @@ func make_circles(radius):
 	if(radius>3):
 		var i=2
 		while(i<=radius):
-			print(i)
 			i+=1
 		while(i>=2):
-			print(i)
 			i-=1
 
 
-func _on_Player_player_turn_finished():
+
+func _on_Player_Player_turn_finished():
 	player_turn=false
+	yield(get_tree().create_timer(0.5),"timeout")
 	enemies.start_enemey_move()
+
+
+
+func _on_Enemies_enemey_turn_finished():
+	player_turn=true
