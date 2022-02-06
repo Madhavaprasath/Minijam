@@ -58,3 +58,5 @@ position = Vector2( 2, 0 )
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="2"]
 anims/Falling = SubResource( 1 )
 anims/RESET = SubResource( 2 )
+
+[connection signal="body_exited" from="." to="." method="_on_Tile_falling_body_exited"]

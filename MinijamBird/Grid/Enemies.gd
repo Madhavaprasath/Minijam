@@ -37,6 +37,7 @@ func start_enemey_move():
 		emit_signal("enemey_turn_finished")
 	else:
 		spwan_snow_balls()
+	delete_far_objects()
 
 func choose(arr):
 	randomize()
@@ -70,3 +71,5 @@ func spwan_snow_balls():
 		i+=1
 	emit_signal("enemey_turn_finished")
 
+func delete_far_objects():
+	pass

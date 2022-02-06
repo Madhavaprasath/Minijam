@@ -1,6 +1,6 @@
 extends Node2D
 
-
+signal start_player_timer()
 
 onready var tilemap=get_node("TileMap")
 
@@ -60,3 +60,4 @@ func _on_Player_Player_turn_finished():
 
 func _on_Enemies_enemey_turn_finished():
 	player_turn=true
+	emit_signal("start_player_timer")
