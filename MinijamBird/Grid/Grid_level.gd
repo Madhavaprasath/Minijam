@@ -19,6 +19,7 @@ var player_turn=true
 
 
 func _ready():
+	
 	put_scene_into_tile()
 func put_scene_into_tile():
 	

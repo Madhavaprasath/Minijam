@@ -16,6 +16,8 @@ var movable_dict={
 onready var level=get_parent()
 
 func _ready():
+	for i in get_tree().get_nodes_in_group("Moving"):
+		i.connect("Dead",self,"On_enemy_dead",[i])
 	var i=32
 	while(i<=(1024-32)):
 		row_vector.append(i)
@@ -31,6 +33,8 @@ func start_enemey_move():
 	if(enemies!=[]):
 		for i in enemies:
 			i.do_movement()
+			var tween:Tween=i.get_node("Tween")
+			yield(tween,"tween_completed")
 		var rand=choose([0,1])
 		if(rand==1):
 			spwan_snow_balls()
@@ -58,7 +62,7 @@ func spwan_snow_balls():
 			if(a in temp_array_positions):
 				a+=a
 			factor=choose([-1,1])
-			pos=Vector2(a,-32) if factor==1 else Vector2(a,(600+32))
+			pos=Vector2(a,-32) if factor==1 else Vector2(a,(600+64))
 		if(child_scene.current==1):
 			var a=choose(colum_vector.duplicate(false))
 			if(a in temp_array_positions):
@@ -73,3 +77,6 @@ func spwan_snow_balls():
 
 func delete_far_objects():
 	pass
+
+func On_enemy_dead(i):
+	print(i)

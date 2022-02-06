@@ -6,7 +6,7 @@
 [sub_resource type="CircleShape2D" id=1]
 radius = 8.0
 
-[node name="Moving_items" type="Area2D"]
+[node name="Moving_items" type="Area2D" groups=["Moving"]]
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
@@ -18,3 +18,5 @@ texture = ExtResource( 1 )
 shape = SubResource( 1 )
 
 [node name="Tween" type="Tween" parent="."]
+
+[connection signal="body_entered" from="." to="." method="_on_Moving_items_body_entered"]

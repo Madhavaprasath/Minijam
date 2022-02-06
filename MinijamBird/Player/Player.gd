@@ -6,6 +6,7 @@ var direction_vector=Vector2()
 var speed=10.0
 var velocity=Vector2()
 var is_moving=false
+var is_knocking=false
 onready var level=get_parent()
 
 
@@ -16,9 +17,11 @@ func _ready() -> void:
 	set_physics_process(true)
 	$Timer.start(2.5)
 func _physics_process(delta: float) -> void:
-	if($Floor_check.get_overlapping_areas())==[]:
-		print("die")
-		queue_free()
+	calculate_exteme_points()
+	if(!is_knocking):
+		if($Floor_check.get_overlapping_areas())==[]:
+			print("die")
+			queue_free()
 
 
 
@@ -58,3 +61,16 @@ func _on_Timer_timeout():
 
 func _on_Level_start_player_timer():
 	$Timer.start(2)
+
+func do_collision_physics(factor):
+	is_knocking=true
+	$Floor_check/CollisionShape2D.set_deferred("disabled",true)
+	for i in range(3):
+		var target_position=global_position+(factor*Vector2(64,64))
+		var result=((target_position.x>=32 and target_position.x<=(1024-32)) and (target_position.y>=32 and target_position.y<=(600-32)))
+		if result:
+			$Tween.interpolate_property(self,"position",global_position,global_position+(factor*Vector2(64,64)*(i+1)),
+						1.0/speed,Tween.TRANS_SINE,Tween.EASE_IN_OUT)
+			$Tween.start()
+	$Floor_check/CollisionShape2D.set_deferred("disabled",false)
+	is_knocking=false
